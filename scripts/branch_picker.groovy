@@ -1,7 +1,7 @@
 properties([parameters([[$class: 'GitParameterDefinition', branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Branch', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH']])])
 node ("master") {
     def WORKING_DIR = pwd()
-    def gitRepoUrl = 'git@github.ford.com:B2CGlobal2/quicklane-global.git'
+    def gitRepoUrl = 'git@github.com:philv2010/microservice-pipelines.git'
     deleteDir()
     stage ("checkout") {
         println ("Branch = ${Branch}")
@@ -14,7 +14,7 @@ node ("master") {
                     [$class: 'PruneStaleBranch'], 
                     [$class: 'CheckoutOption', timeout: 15], 
                     [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]], 
-                userRemoteConfigs: [[credentialsId: '89cacb81-0aa9-47d2-88b2-7734e3e2ba5d', url: gitRepoUrl]]
+                userRemoteConfigs: [[credentialsId: '8851f4a3-6599-4b2c-af49-5c58bcad1704', url: gitRepoUrl]]
                 ]);
             try {
                 println "Root checkout completed to populate Branch List"
@@ -33,7 +33,7 @@ node ("master") {
                     [$class: 'PruneStaleBranch'], 
                     [$class: 'CheckoutOption', timeout: 15], 
                     [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]], 
-                userRemoteConfigs: [[credentialsId: '89cacb81-0aa9-47d2-88b2-7734e3e2ba5d', url: gitRepoUrl]]
+                userRemoteConfigs: [[credentialsId: '8851f4a3-6599-4b2c-af49-5c58bcad1704', url: gitRepoUrl]]
                 ]);
         }
     }
