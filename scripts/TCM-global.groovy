@@ -16,9 +16,9 @@ node("master") {
         	deleteDir()
             sh """eval `ssh-agent -s`
                ssh-add -D
-               ssh-add ~/.ssh/quicklane-global
+               ssh-add ~/.ssh/tcm-global
                git clone ${gitRepoUrl}
-               cd quicklane-global
+               cd tcm-global
                git checkout ${branch}"""
         }
         stage ("Build") {
