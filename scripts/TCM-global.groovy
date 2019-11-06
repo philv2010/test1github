@@ -24,7 +24,7 @@ node("master") {
         stage ("Build") {
 			def gradle_version = "G-4.10"
 	    	withEnv( ["PATH+GRADLE=${tool gradle_version}/bin"] ){
-				sh "~/tools/hudson.plugins.gradle.GradleInstallation/G-4.10/bin/gradle --build-file=${workspace}/quicklane-global/build.gradle build"
+				sh "~/tools/hudson.plugins.gradle.GradleInstallation/G-4.10/bin/gradle --build-file=${workspace}/tcm-global/build.gradle build"
 			}
 		}
     }
