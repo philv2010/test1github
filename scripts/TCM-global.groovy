@@ -2,14 +2,14 @@ properties([ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToK
 
 node("master") {
     def workspace = pwd() 
-	def gitRepoUrl = 'git@github.com:philv2010/tcm-global.git'
+	def gitRepoUrl = 'git@github.com:philv2010/quicklane-global.git'
 	def branch = 'develop'
 
 	//Global Variables
 	def AEM_AUTHOR = 'http://tcmauthor.tcmech.net' //Author Server
-	def PACKAGE_PATH_APP = "${workspace}/tcm-global/build/distributions" // Path to application package in workspace
-	def PACKAGE_NAME_APP = 'tcm-global-full' // Application Package name
-	def PACKAGE_LOCATION = 'com.tcm' //package group in AEM crx/packmgr
+	def PACKAGE_PATH_APP = "${workspace}/quicklane-global/build/distributions" // Path to application package in workspace
+	def PACKAGE_NAME_APP = 'quicklane-global-full' // Application Package name
+	def PACKAGE_LOCATION = 'com.ford' //package group in AEM crx/packmgr
 
 	try{
         stage ("checkout") {
@@ -18,13 +18,13 @@ node("master") {
                ssh-add -D
                ssh-add ~/.ssh/tcm-global
                git clone ${gitRepoUrl}
-               cd tcm-global
+               cd quicklane-global
                git checkout ${branch}"""
         }
         stage ("Build") {
 			def gradle_version = "G-4.10"
 	    	withEnv( ["PATH+GRADLE=${tool gradle_version}/bin"] ){
-				sh "~/tools/hudson.plugins.gradle.GradleInstallation/G-4.10/bin/gradle --build-file=${workspace}/tcm-global/build.gradle build"
+				sh "~/tools/hudson.plugins.gradle.GradleInstallation/G-4.10/bin/gradle --build-file=${workspace}/quicklane-global/build.gradle build"
 			}
 		}
     }
