@@ -7,8 +7,8 @@ node("master") {
 
 	//Global Variables
 	def AEM_AUTHOR = 'http://tcmauthor.tcmech.net' //Author Server
-	def PACKAGE_PATH_APP = "${workspace}/quicklane-global/build/distributions" // Path to application package in workspace
-	def PACKAGE_NAME_APP = 'quicklane-global-full' // Application Package name
+	def PACKAGE_PATH_APP = "${workspace}/tcm-global/build/distributions" // Path to application package in workspace
+	def PACKAGE_NAME_APP = 'tcm-global-full' // Application Package name
 	def PACKAGE_LOCATION = 'com.tcm' //package group in AEM crx/packmgr
 
 	try{
