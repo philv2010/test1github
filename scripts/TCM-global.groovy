@@ -1,4 +1,4 @@
-properties([ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')), parameters([credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: '4debb9c2-6fff-40de-bf84-a5f7862bcf84', description: 'TCM AEM Deploy User', name: 'JENKINS_DEPLOY_USER', required: true)])])
+properties([ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')), parameters([credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: 'b5ac603a-6b93-4255-bcaf-eeed3e27698e', description: 'TCM AEM Deploy User', name: 'JENKINS_DEPLOY_USER', required: true)])])
 
 node("master") {
     def workspace = pwd() 
