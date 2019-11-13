@@ -43,7 +43,7 @@ properties([ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToK
 node("master") {
     def workspace = pwd()
         def gitRepoUrl = 'git@github.com:philv2010/quicklane-global.git'
-        def branch = 'develop'
+        def branch = "${Branch}"
 
         //Global Variables
         def AEM_AUTHOR = 'http://tcmauthor.tcmech.net' //Author Server
