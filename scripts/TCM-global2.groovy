@@ -1,7 +1,7 @@
 properties([parameters([[$class: 'GitParameterDefinition', branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Branch', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH']])])
 node ("master") {
     def WORKING_DIR = pwd()
-    def gitRepoUrl = 'git@github.com:philv2010/tcm-global.git'
+    def gitRepoUrl = 'git@github.com:philv2010/quicklane-global.git'
     deleteDir()
     stage ("checkout") {
         println ("Branch = ${Branch}")
