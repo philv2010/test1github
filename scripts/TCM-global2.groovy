@@ -14,7 +14,7 @@ node ("master") {
                     [$class: 'PruneStaleBranch'],
                     [$class: 'CheckoutOption', timeout: 15],
                     [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]],
-                userRemoteConfigs: [[credentialsId: '8851f4a3-6599-4b2c-af49-5c58bcad1704', url: gitRepoUrl]]
+                userRemoteConfigs: [[credentialsId: '1c00988b-3bae-4a5c-a1b8-19b559b56dcc', url: gitRepoUrl]]
                 ]);
             try {
                 println "Root checkout completed to populate Branch List"
@@ -33,7 +33,7 @@ node ("master") {
                     [$class: 'PruneStaleBranch'],
                     [$class: 'CheckoutOption', timeout: 15],
                     [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]],
-                userRemoteConfigs: [[credentialsId: '8851f4a3-6599-4b2c-af49-5c58bcad1704', url: gitRepoUrl]]
+                userRemoteConfigs: [[credentialsId: '1c00988b-3bae-4a5c-a1b8-19b559b56dcc', url: gitRepoUrl]]
                 ]);
         }
     }
