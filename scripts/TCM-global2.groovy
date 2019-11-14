@@ -1,44 +1,4 @@
-properties([parameters([[$class: 'GitParameterDefinition', branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Branch', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH']])])
-node ("master") {
-    def WORKING_DIR = pwd()
-    def gitRepoUrl = 'git@github.com:philv2010/quicklane-global.git'
-    deleteDir()
-    stage ("checkout") {
-        println ("Branch = ${Branch}")
-        // checkout master if Branch Picker doesn't populate (then stop do not deploy master)
-        if (Branch.contains("No Git")) {
-            checkout([$class: 'GitSCM',
-                branches: [[name: '*/master']],
-                doGenerateSubmoduleConfigurations: false, extensions: [
-                    [$class: 'CleanBeforeCheckout'],
-                    [$class: 'PruneStaleBranch'],
-                    [$class: 'CheckoutOption', timeout: 15],
-                    [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]],
-                userRemoteConfigs: [[credentialsId: '1c00988b-3bae-4a5c-a1b8-19b559b56dcc', url: gitRepoUrl]]
-                ]);
-            try {
-                println "Root checkout completed to populate Branch List"
-                error 'FAIL'
-            }
-            catch (e) {
-                currentBuild.result = 'UNSTABLE'
-            }
-        }
-        // checkout the selected Branch
-        else {
-            checkout([$class: 'GitSCM',
-                branches: [[name: Branch]],
-                doGenerateSubmoduleConfigurations: false, extensions: [
-                    [$class: 'CleanBeforeCheckout'],
-                    [$class: 'PruneStaleBranch'],
-                    [$class: 'CheckoutOption', timeout: 15],
-                    [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]],
-                userRemoteConfigs: [[credentialsId: '1c00988b-3bae-4a5c-a1b8-19b559b56dcc', url: gitRepoUrl]]
-                ]);
-        }
-    }
-}
-properties([ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')), parameters([credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: 'b5ac603a-6b93-4255-bcaf-eeed3e27698e', description: 'TCM AEM Deploy User', name: 'JENKINS_DEPLOY_USER', required: true)])])
+properties([ buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')), parameters([credentials(credentialType: 'com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl', defaultValue: 'b5ac603a-6b93-4255-bcaf-eeed3e27698e', description: 'TCM AEM Deploy User', name: 'JENKINS_DEPLOY_USER', required: true)]), ([[$class: 'GitParameterDefinition', branch: '', branchFilter: '.*', defaultValue: '', description: '', name: 'Branch', quickFilterEnabled: false, selectedValue: 'TOP', sortMode: 'DESCENDING_SMART', tagFilter: '*', type: 'PT_BRANCH']])])
 
 node("master") {
     def workspace = pwd()
@@ -54,6 +14,37 @@ node("master") {
         try{
         stage ("checkout") {
                 deleteDir()
+                 println ("Branch = ${Branch}")
+                        // checkout master if Branch Picker doesn't populate (then stop do not deploy master)
+                        if (Branch.contains("No Git")) {
+                                checkout([$class: 'GitSCM',
+                                branches: [[name: '*/master']],
+                                doGenerateSubmoduleConfigurations: false, extensions: [
+                                [$class: 'CleanBeforeCheckout'],
+                                [$class: 'PruneStaleBranch'],
+                                [$class: 'CheckoutOption', timeout: 15],
+                                [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]],
+                                userRemoteConfigs: [[credentialsId: '1c00988b-3bae-4a5c-a1b8-19b559b56dcc', url: gitRepoUrl]]
+                        ]);
+                        try {
+                                println "Root checkout completed to populate Branch List"
+                                error 'FAIL'
+                        }
+                        catch (e) {
+                                currentBuild.result = 'UNSTABLE'
+                        }
+                }
+                        // checkout the selected Branch
+                        else {
+                                checkout([$class: 'GitSCM',
+                                branches: [[name: Branch]],
+                                doGenerateSubmoduleConfigurations: false, extensions: [
+                                [$class: 'CleanBeforeCheckout'],
+                                [$class: 'PruneStaleBranch'],
+                                [$class: 'CheckoutOption', timeout: 15],
+                                [$class: 'CloneOption', depth: 2, noTags: false, reference: '', shallow: true, timeout: 45]],
+                                userRemoteConfigs: [[credentialsId: '1c00988b-3bae-4a5c-a1b8-19b559b56dcc', url: gitRepoUrl]]
+                        ]);
             sh """eval `ssh-agent -s`
                ssh-add -D
                ssh-add ~/.ssh/tcm-global
@@ -61,6 +52,7 @@ node("master") {
                cd quicklane-global
                git checkout ${branch}"""
         }
+}
         stage ("Build") {
                         def gradle_version = "G-4.10"
                 withEnv( ["PATH+GRADLE=${tool gradle_version}/bin"] ){
@@ -124,4 +116,3 @@ node("master") {
                 }
         }
 }
-
