@@ -24,7 +24,7 @@ node ("master") {
                 currentBuild.result = 'UNSTABLE'
             }
         }
-        // checkout the selected Branch
+        // checkout the selected Branch(s)
         else {
             checkout([$class: 'GitSCM', 
                 branches: [[name: Branch]], 
